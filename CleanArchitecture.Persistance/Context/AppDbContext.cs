@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CleanArchitecture.Domain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CleanArchitecture.Persistance.Context
@@ -8,6 +9,28 @@ namespace CleanArchitecture.Persistance.Context
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
+        }
+
+        //bu ApplyConfigurationsFromAssembly metoduyla configuration dosyalarını tek tek eklemeye gerek kalmıyor.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)=>
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyReference).Assembly);
+
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entires = ChangeTracker.Entries<Entity>();
+            foreach (var entry in entires)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property(p => p.CreatedDate).CurrentValue = DateTime.Now;
+                }
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Property(p => p.UpdatedDate).CurrentValue = DateTime.Now;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }
