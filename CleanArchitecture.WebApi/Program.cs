@@ -2,13 +2,18 @@ using CleanArchitecture.Application.Services;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //scope islemleri 
 builder.Services.AddScoped<ICarService, CarService>();
 
-
+//Automapper islemleri
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddMaps(typeof(CleanArchitecture.Persistance.AssemblyReference).Assembly);
+});
 
 //connection islemleri 
 string connectionString = builder.Configuration.GetConnectionString("SqlServer");
