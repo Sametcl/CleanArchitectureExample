@@ -2,6 +2,7 @@ using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Services;
+using CleanArchitecture.WebApi.Middleware;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//scope islemleri 
+//service icin scope islemleri 
 builder.Services.AddScoped<ICarService, CarService>();
+
+//exception icin scope islemleri
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 //Automapper islemleri
 builder.Services.AddAutoMapper(cfg =>
@@ -51,6 +55,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//exception icin middleware ekleme
+app.UseMiddlewareExtensions();
 
 app.UseHttpsRedirection();
 
