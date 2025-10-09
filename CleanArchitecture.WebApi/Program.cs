@@ -1,6 +1,9 @@
+using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Services;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,6 +34,11 @@ builder.Services.AddMediatR(cfr =>
 {
     cfr.RegisterServicesFromAssembly(typeof(CleanArchitecture.Application.AssemblyReference).Assembly);
 });
+
+//Fluent validation icin MediatR pipeline'a validation behavior ekliyoruz.
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+//Fluent validation icin tum validator'lari tarayip kayit ediyoruz.
+builder.Services.AddValidatorsFromAssembly(typeof(CleanArchitecture.Application.AssemblyReference).Assembly);
 
 
 builder.Services.AddEndpointsApiExplorer();
