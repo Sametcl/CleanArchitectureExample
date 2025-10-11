@@ -1,17 +1,23 @@
 using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
+using CleanArchitecture.Domain.Repositories;
 using CleanArchitecture.Persistance.Context;
+using CleanArchitecture.Persistance.Repositories;
 using CleanArchitecture.Persistance.Services;
 using CleanArchitecture.WebApi.Middleware;
 using FluentValidation;
+using GenericRepository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //service icin scope islemleri 
 builder.Services.AddScoped<ICarService, CarService>();
+
+//ts paketinden repository ve uof pattern icin scope islemleri
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<AppDbContext>());
 
 //exception icin scope islemleri
 builder.Services.AddTransient<ExceptionMiddleware>();
