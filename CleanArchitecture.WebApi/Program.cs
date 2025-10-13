@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //service icin scope islemleri 
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 //ts paketinden repository ve uof pattern icin scope islemleri
 builder.Services.AddScoped<ICarRepository, CarRepository>();
