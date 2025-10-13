@@ -2,6 +2,7 @@ using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Repositories;
+using CleanArchitecture.Infrastructure.Services;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Repositories;
 using CleanArchitecture.Persistance.Services;
@@ -11,12 +12,15 @@ using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Net.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //service icin scope islemleri 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMailService, MailService>();
 
 //ts paketinden repository ve uof pattern icin scope islemleri
 builder.Services.AddScoped<ICarRepository, CarRepository>();
@@ -40,6 +44,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //identity yapisini service tanitma ve db ile iliskilendirme
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+
+//fluent.smtp mail ayarlari
+var smtpSettings = builder.Configuration.GetSection("SmtpSettings");
+builder.Services.AddFluentEmail(smtpSettings["FromEmail"])
+    .AddSmtpSender(new SmtpClient
+    {
+        Host = smtpSettings["Host"],
+        Port = int.Parse(smtpSettings["Port"]),
+        EnableSsl = bool.Parse(smtpSettings["EnableSsl"]),
+        Credentials = new NetworkCredential(
+                    smtpSettings["Username"],
+                    smtpSettings["Password"])
+    });
+
 
 
 builder.Services.AddControllers()
