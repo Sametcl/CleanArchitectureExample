@@ -10,5 +10,8 @@ namespace CleanArchitecture.Persistance.Repositories
         public CarRepository(AppDbContext context) : base(context)
         {
         }
+
+
+
     }
 }

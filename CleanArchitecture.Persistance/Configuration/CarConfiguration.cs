@@ -15,6 +15,7 @@ namespace CleanArchitecture.Persistance.Configuration
         {
             builder.ToTable("Cars");    
             builder.HasKey(c => c.Id);
+            builder.HasIndex(P => P.Name);
         }
     }
 }

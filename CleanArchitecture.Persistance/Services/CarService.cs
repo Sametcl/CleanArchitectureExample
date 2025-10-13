@@ -7,6 +7,8 @@ using CleanArchitecture.Domain.Repositories;
 using CleanArchitecture.Persistance.Context;
 using GenericRepository;
 using Microsoft.EntityFrameworkCore;
+using Pandorax.PagedList;
+using Pandorax.PagedList.EntityFrameworkCore;
 
 namespace CleanArchitecture.Persistance.Services
 {
@@ -35,9 +37,12 @@ namespace CleanArchitecture.Persistance.Services
             //await context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<IList<Car>> GetAllAsync(GetAllCarQuery request, CancellationToken cancellationToken)
+        public async Task<IPagedList<Car>> GetAllAsync(GetAllCarQuery request, CancellationToken cancellationToken)
         {
-            IList<Car> cars = await carRepository.GetAll().ToListAsync();
+            IPagedList<Car> cars = await carRepository
+                .Where(p => p.Name.ToLower().Contains(request.Search.ToLower()))
+                .ToPagedListAsync(request.PageNumber, request.PageSize, cancellationToken);
+            
             return cars;
         }
     }

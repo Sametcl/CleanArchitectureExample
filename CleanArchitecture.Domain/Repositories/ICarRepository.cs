@@ -3,7 +3,7 @@ using GenericRepository;
 
 namespace CleanArchitecture.Domain.Repositories
 {
-    public interface ICarRepository :IRepository<Car>  
+    public interface ICarRepository : IRepository<Car>
     {
     }
 }

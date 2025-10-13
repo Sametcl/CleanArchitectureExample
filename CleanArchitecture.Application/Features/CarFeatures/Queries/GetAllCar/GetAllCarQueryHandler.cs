@@ -3,10 +3,11 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Repositories;
 using GenericRepository;
 using MediatR;
+using Pandorax.PagedList;
 
 namespace CleanArchitecture.Application.Features.CarFeatures.Queries.GetAllCar
 {
-    public sealed class GetAllCarQueryHandler : IRequestHandler<GetAllCarQuery, IList<Car>>
+    public sealed class GetAllCarQueryHandler : IRequestHandler<GetAllCarQuery, IPagedList<Car>>
     {
         private readonly ICarService _carService;
         private readonly IUnitOfWork _unitOfWork;
@@ -15,9 +16,9 @@ namespace CleanArchitecture.Application.Features.CarFeatures.Queries.GetAllCar
             _carService = carService;
             _unitOfWork = unitOfWork;
         }
-        public async Task<IList<Car>> Handle(GetAllCarQuery request, CancellationToken cancellationToken)
+        public async Task<IPagedList<Car>> Handle(GetAllCarQuery request, CancellationToken cancellationToken)
         {
-            IList<Car> cars = await _carService.GetAllAsync(request, cancellationToken);
+            IPagedList<Car> cars = await _carService.GetAllAsync(request, cancellationToken);
             return cars;
         }
     }

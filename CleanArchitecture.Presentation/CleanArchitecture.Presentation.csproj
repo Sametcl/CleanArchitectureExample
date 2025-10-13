@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="13.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+    <PackageReference Include="Pandorax.PagedList.EntityFrameworkCore" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

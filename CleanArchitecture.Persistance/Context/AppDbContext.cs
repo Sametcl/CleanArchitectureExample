@@ -7,11 +7,9 @@ namespace CleanArchitecture.Persistance.Context
 {
     public sealed class AppDbContext : DbContext, IUnitOfWork
     {
-        public AppDbContext()
+        public AppDbContext(DbContextOptions options) : base(options)
         {
-
         }
-
 
         //bu ApplyConfigurationsFromAssembly metoduyla configuration dosyalarını tek tek eklemeye gerek kalmıyor.
         protected override void OnModelCreating(ModelBuilder modelBuilder) =>
@@ -33,11 +31,6 @@ namespace CleanArchitecture.Persistance.Context
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
-        }
-
-        public int SaveChanges()
-        {
-            throw new NotImplementedException();
         }
     }
 }
