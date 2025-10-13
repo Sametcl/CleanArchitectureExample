@@ -6,7 +6,6 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Repositories;
 using CleanArchitecture.Persistance.Context;
 using GenericRepository;
-using Microsoft.EntityFrameworkCore;
 using Pandorax.PagedList;
 using Pandorax.PagedList.EntityFrameworkCore;
 
