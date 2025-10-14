@@ -4,8 +4,5 @@
         string Token, 
         string RefreshToken ,
         DateTime? RefreshTokenExpires,
-        string UserId,
-        string UserName,
-        string FirstName,
-        string Email);
+        string UserId);
 }

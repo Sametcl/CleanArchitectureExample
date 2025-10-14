@@ -52,11 +52,7 @@ namespace CleanArchitecture.Infrastructure.Authentication
                 token,
                 refreshToken,
                 user.RefreshTokenExpires.Value,
-                user.Id,
-                user.UserName,
-                user.FirstName,
-                user.Email
-                );
+                user.Id);
             return response;
         }
     }

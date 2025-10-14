@@ -20,7 +20,7 @@ namespace CleanArchitecture.Application.Features.AuthFeatures.Commands.Register
         {
            await authService.RegisterAsync(request);
            
-           await mailService.SendMailAsync(request.Email,request.FirstName);
+           //await mailService.SendMailAsync(request.Email,request.FirstName);
            return new MessageResponse("User registered successfully.");
         }
     }

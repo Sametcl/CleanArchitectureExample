@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Abstractions;
+using CleanArchitecture.Application.Features.AuthFeatures.Commands.Login;
 using CleanArchitecture.Application.Features.AuthFeatures.Commands.Register;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Persistance.Services
 {
@@ -10,10 +13,32 @@ namespace CleanArchitecture.Persistance.Services
     {
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
-        public AuthService(IMapper mapper, UserManager<User> userManager)
+        private readonly IJwtProvider jwtProvider;
+        public AuthService(IMapper mapper, UserManager<User> userManager, IJwtProvider jwtProvider)
         {
             this.mapper = mapper;
             this.userManager = userManager;
+            this.jwtProvider = jwtProvider;
+        }
+
+        public async Task<LoginCommandResponse> LoginAsync(LoginCommand request ,CancellationToken cancellationToken)
+        {
+            User? user = await userManager.Users.Where(p =>
+            p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (user == null)
+            {
+                throw new Exception("Kullanici bulunamadi ");
+            }
+
+            bool result = await userManager.CheckPasswordAsync(user, request.Password);
+            if (result)
+            {
+                LoginCommandResponse response = await jwtProvider.CreateTokenAsync(user);
+                return response;
+            }
+            throw new Exception("Kullanici adi ya da sifre hatali ");
         }
 
         public async Task RegisterAsync(RegisterCommand request)
