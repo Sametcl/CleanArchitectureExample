@@ -1,23 +1,28 @@
 ﻿using CleanArchitecture.Application.Abstractions;
+using CleanArchitecture.Application.Features.AuthFeatures.Commands.Login;
 using CleanArchitecture.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Authentication
 {
     public sealed class JwtProvider : IJwtProvider
     {
         private readonly JwtOptions jwtOptions;
-
-        public JwtProvider(IOptions<JwtOptions> jwtOptions)
+        private readonly UserManager<User> userManager;
+        public JwtProvider(IOptions<JwtOptions> jwtOptions, UserManager<User> userManager)
         {
             this.jwtOptions = jwtOptions.Value;
+            this.userManager = userManager;
         }
 
-        public string CreateToken(User user)
+        public async Task<LoginCommandResponse> CreateTokenAsync(User user)
         {
             var claims = new Claim[]
             {
@@ -25,19 +30,34 @@ namespace CleanArchitecture.Infrastructure.Authentication
                 new Claim(JwtRegisteredClaimNames.Name , user.UserName),
                 new Claim("UserName" , (user.FirstName + user.LastName)),
             };
+            DateTime expires = DateTime.Now.AddHours(1);
             JwtSecurityToken jwtSecurityToken = new(
                 issuer: jwtOptions.Issuer,
                 audience: jwtOptions.Audience,
                 claims: claims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddHours(1),
+                expires: expires,
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(jwtOptions.SecretKey)),
                     SecurityAlgorithms.HmacSha256));
 
             string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            return token;
+            string refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpires = expires.AddMinutes(15);
+            await userManager.UpdateAsync(user);
+
+            LoginCommandResponse response = new(
+                token,
+                refreshToken,
+                user.RefreshTokenExpires.Value,
+                user.Id,
+                user.UserName,
+                user.FirstName,
+                user.Email
+                );
+            return response;
         }
     }
 }
