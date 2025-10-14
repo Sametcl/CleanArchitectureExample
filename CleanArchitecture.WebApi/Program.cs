@@ -7,6 +7,7 @@ using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Repositories;
 using CleanArchitecture.Persistance.Services;
 using CleanArchitecture.WebApi.Middleware;
+using CleanArchitecture.WebApi.OptionsSetup;
 using FluentValidation;
 using GenericRepository;
 using MediatR;
@@ -28,6 +29,14 @@ builder.Services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<AppDbConte
 
 //exception icin scope islemleri
 builder.Services.AddTransient<ExceptionMiddleware>();
+
+// appsetings json'deki Jwt bolumunu JwtOptions ile eslestirme
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+
+//configure jwt bearer options setup ile addjwtbearer icindeki konfigurasyon islemlerini ayri bir sinifa tasiyoruz. 
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+builder.Services.AddAuthentication().AddJwtBearer();
+
 
 //Automapper islemleri
 builder.Services.AddAutoMapper(cfg =>

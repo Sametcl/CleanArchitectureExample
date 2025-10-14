@@ -50,6 +50,7 @@ namespace CleanArchitecture.Infrastructure.Services
         </body>
         </html>
         ";
+
             await fluentEmail
                 .To(to)
                 .Subject("Hos Geldiniz")
