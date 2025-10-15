@@ -14,7 +14,6 @@ using FluentValidation;
 using GenericRepository;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Net;
@@ -28,6 +27,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
 //ts paketinden repository ve uof pattern icin scope islemleri
 builder.Services.AddScoped<ICarRepository, CarRepository>();
@@ -58,7 +60,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 //identity yapisini service tanitma ve db ile iliskilendirme
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<AppDbContext>();
 
 
 //fluent.smtp mail ayarlari
@@ -131,7 +133,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddlewareExtensions();
 
 app.UseHttpsRedirection();
-
 
 app.MapControllers();
 
