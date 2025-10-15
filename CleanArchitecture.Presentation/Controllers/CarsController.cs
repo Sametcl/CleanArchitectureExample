@@ -4,11 +4,13 @@ using CleanArchitecture.Domain.Dtos;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Presentation.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pandorax.PagedList;
 
 namespace CleanArchitecture.Presentation.Controllers
 {
+  
     public sealed class CarsController : ApiController
     {
         public CarsController(IMediator _mediator) : base(_mediator){}

@@ -4,10 +4,12 @@ using CleanArchitecture.Application.Features.AuthFeatures.Commands.Register;
 using CleanArchitecture.Domain.Dtos;
 using CleanArchitecture.Presentation.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Presentation.Controllers
 {
+   
     public sealed class AuthController : ApiController
     {
         public AuthController(IMediator _mediator) : base(_mediator)
@@ -15,6 +17,7 @@ namespace CleanArchitecture.Presentation.Controllers
         }
 
         [HttpPost("[action]")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommand request , CancellationToken cancellationToken)
         {
             MessageResponse response = await _mediator.Send(request, cancellationToken);
@@ -22,8 +25,8 @@ namespace CleanArchitecture.Presentation.Controllers
         }
 
 
-
         [HttpPost("[action]")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginCommand request, CancellationToken cancellationToken)
         {
             LoginCommandResponse response = await _mediator.Send(request, cancellationToken);
