@@ -1,8 +1,6 @@
 ﻿using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Dtos;
-using CleanArchitecture.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace CleanArchitecture.Application.Features.AuthFeatures.Commands.Register
 {
