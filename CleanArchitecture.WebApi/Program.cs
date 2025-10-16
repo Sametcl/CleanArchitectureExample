@@ -46,6 +46,21 @@ builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.AddAuthentication().AddJwtBearer();
 builder.Services.AddAuthorization();
 
+//Cors politikasi
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+        .SetIsOriginAllowed(policy =>true);
+    });
+});
+
+
+
 //Automapper islemleri
 builder.Services.AddAutoMapper(cfg =>
 {
@@ -128,6 +143,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//Cors politikasi 
+app.UseCors();  
 
 //exception icin middleware ekleme
 app.UseMiddlewareExtensions();

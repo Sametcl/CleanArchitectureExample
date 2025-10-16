@@ -27,7 +27,7 @@ namespace CleanArchitecture.Infrastructure.Authorization
             }
             var userHasRole = userRoleRepository.Where(u => u.UserId == userIdClaim.Value)
                 .Include(p => p.Role)
-                .Any(p => p.Role.Name == role);
+                .Any(p => p.Role.Name == role); 
 
             if (!userHasRole)
             {
