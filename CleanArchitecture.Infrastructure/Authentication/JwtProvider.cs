@@ -8,7 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Authentication
 {
@@ -26,6 +25,7 @@ namespace CleanArchitecture.Infrastructure.Authentication
         {
             var claims = new Claim[]
             {
+                new Claim(ClaimTypes.NameIdentifier , user.Id),
                 new Claim(ClaimTypes.Email , user.Email),
                 new Claim(JwtRegisteredClaimNames.Name , user.UserName),
                 new Claim("UserName" , (user.FirstName + user.LastName)),
