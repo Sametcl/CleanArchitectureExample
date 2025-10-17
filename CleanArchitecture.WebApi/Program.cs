@@ -1,5 +1,8 @@
+using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.WebApi.Configurations;
 using CleanArchitecture.WebApi.Middleware;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +29,17 @@ app.MapControllers();
 
 app.MapGet("/deneme", () => "Welcome to Clean Architecture Web API");
 
-app.MapGet("/health", () => Results.Ok(new
+app.MapGet("/health", async (AppDbContext context) => 
 {
-    status = "healthy",
-    timestamp = DateTime.UtcNow
-}));
+    var cars = await context.Set<CleanArchitecture.Domain.Entities.Car>() 
+                            .ToListAsync(); 
+    return Results.Ok(new
+    {
+        status = "healthy",
+        timestamp = DateTime.UtcNow,
+        databaseCheck = "OK",
+        cars = cars 
+    });
+});
 
 app.Run();

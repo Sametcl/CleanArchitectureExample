@@ -1,7 +1,9 @@
 ﻿using CleanArchitecture.Application.Features.UserRoleFeatures.Commands.CreateUserRole;
 using CleanArchitecture.Domain.Dtos;
+using CleanArchitecture.Infrastructure.Authorization;
 using CleanArchitecture.Presentation.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Presentation.Controllers
@@ -13,6 +15,7 @@ namespace CleanArchitecture.Presentation.Controllers
         }
 
         [HttpPost("[action]")]
+        [RoleFilter("Create")]
         public async Task<IActionResult> Create(CreateUserRoleCommand request, CancellationToken cancellationToken)
         {
             MessageResponse response = await _mediator.Send(request, cancellationToken);
