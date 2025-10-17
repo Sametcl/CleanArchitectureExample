@@ -21,10 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Persistan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Presentation", "CleanArchitecture.Presentation\CleanArchitecture.Presentation.csproj", "{E13C972C-345F-4380-9E8B-27EF3ACAED3B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{55A7F508-B7D8-400A-8CC4-319CE4278507}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.UnitTest", "CleanArchitecture.UnitTest\CleanArchitecture.UnitTest.csproj", "{C5DFF25D-404F-4F41-BCC5-758E9D2C1C8A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
@@ -60,10 +56,6 @@ Global
 		{E13C972C-345F-4380-9E8B-27EF3ACAED3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E13C972C-345F-4380-9E8B-27EF3ACAED3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E13C972C-345F-4380-9E8B-27EF3ACAED3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5DFF25D-404F-4F41-BCC5-758E9D2C1C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5DFF25D-404F-4F41-BCC5-758E9D2C1C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5DFF25D-404F-4F41-BCC5-758E9D2C1C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5DFF25D-404F-4F41-BCC5-758E9D2C1C8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,7 +69,6 @@ Global
 		{8909092C-1D45-4D3D-BBDE-BCC446E1F9E3} = {3762A8E8-1DC6-4103-97E7-CD85C75CEEC7}
 		{02CC047F-CA79-473F-B0DE-F365FBE37C50} = {3762A8E8-1DC6-4103-97E7-CD85C75CEEC7}
 		{E13C972C-345F-4380-9E8B-27EF3ACAED3B} = {3762A8E8-1DC6-4103-97E7-CD85C75CEEC7}
-		{C5DFF25D-404F-4F41-BCC5-758E9D2C1C8A} = {55A7F508-B7D8-400A-8CC4-319CE4278507}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9B99256-06A4-4916-BDF6-F78C8F9F1BD1}
