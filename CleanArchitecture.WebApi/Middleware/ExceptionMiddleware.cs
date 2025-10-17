@@ -56,7 +56,7 @@ namespace CleanArchitecture.WebApi.Middleware
                 StackTrace = ex.StackTrace,
                 RequestPath = request.Path,
                 RequestMethod = request.Method,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.UtcNow
             };
             await _context.Set<ErrorLog>().AddAsync(errorLog,default);
             await _context.SaveChangesAsync(default);

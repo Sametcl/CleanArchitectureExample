@@ -24,4 +24,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+app.MapGet("/deneme", () => "Welcome to Clean Architecture Web API"); 
+
 app.Run();
