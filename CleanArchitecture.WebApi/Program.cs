@@ -24,6 +24,12 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app.MapGet("/deneme", () => "Welcome to Clean Architecture Web API"); 
+app.MapGet("/deneme", () => "Welcome to Clean Architecture Web API");
+
+app.MapGet("/health", () => Results.Ok(new
+{
+    status = "healthy",
+    timestamp = DateTime.UtcNow
+}));
 
 app.Run();
