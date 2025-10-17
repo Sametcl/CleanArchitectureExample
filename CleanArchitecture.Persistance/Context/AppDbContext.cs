@@ -10,7 +10,8 @@ namespace CleanArchitecture.Persistance.Context
 {
     public sealed class AppDbContext : IdentityDbContext<User, Role, string>, IUnitOfWork
     {
-        public AppDbContext(DbContextOptions options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+         : base(options)
         {
         }
 

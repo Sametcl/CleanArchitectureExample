@@ -24,7 +24,7 @@ namespace CleanArchitecture.Persistance.Services
 
         public async Task<LoginCommandResponse> CreateNewTokenByRefreshTokenAsync(CreateNewTokenByRefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            User user = await userManager.FindByIdAsync(request.UserId);
+            User? user = await userManager.FindByIdAsync(request.UserId);
             if (user == null)
             {
                 throw new Exception("Kullanici bulunamadi ");
