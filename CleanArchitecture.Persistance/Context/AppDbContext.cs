@@ -35,11 +35,11 @@ namespace CleanArchitecture.Persistance.Context
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Property(p => p.CreatedDate).CurrentValue = DateTime.Now;
+                    entry.Property(p => p.CreatedDate).CurrentValue = DateTime.UtcNow;
                 }
                 if (entry.State == EntityState.Modified)
                 {
-                    entry.Property(p => p.UpdatedDate).CurrentValue = DateTime.Now;
+                    entry.Property(p => p.UpdatedDate).CurrentValue = DateTime.UtcNow;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);

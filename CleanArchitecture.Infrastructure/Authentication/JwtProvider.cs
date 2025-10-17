@@ -30,12 +30,12 @@ namespace CleanArchitecture.Infrastructure.Authentication
                 new Claim(JwtRegisteredClaimNames.Name , user.UserName),
                 new Claim("UserName" , (user.FirstName + user.LastName)),
             };
-            DateTime expires = DateTime.Now.AddHours(1);
+            DateTime expires = DateTime.UtcNow.AddHours(1);
             JwtSecurityToken jwtSecurityToken = new(
                 issuer: jwtOptions.Issuer,
                 audience: jwtOptions.Audience,
                 claims: claims,
-                notBefore: DateTime.Now,
+                notBefore: DateTime.UtcNow,
                 expires: expires,
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(
