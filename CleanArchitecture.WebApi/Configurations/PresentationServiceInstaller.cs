@@ -23,18 +23,18 @@ namespace CleanArchitecture.WebApi.Configurations
                 });
             });
 
-            //fluent.smtp mail ayarlari
-            var smtpSettings = configuration.GetSection("SmtpSettings");
-            services.AddFluentEmail(smtpSettings["FromEmail"])
-                .AddSmtpSender(new SmtpClient
-                {
-                    Host = smtpSettings["Host"],
-                    Port = int.Parse(smtpSettings["Port"]),
-                    EnableSsl = bool.Parse(smtpSettings["EnableSsl"]),
-                    Credentials = new NetworkCredential(
-                                smtpSettings["Username"],
-                                smtpSettings["Password"])
-                });
+            ////fluent.smtp mail ayarlari
+            //var smtpSettings = configuration.GetSection("SmtpSettings");
+            //services.AddFluentEmail(smtpSettings["FromEmail"])
+            //    .AddSmtpSender(new SmtpClient
+            //    {
+            //        Host = smtpSettings["Host"],
+            //        Port = int.Parse(smtpSettings["Port"]),
+            //        EnableSsl = bool.Parse(smtpSettings["EnableSsl"]),
+            //        Credentials = new NetworkCredential(
+            //                    smtpSettings["Username"],
+            //                    smtpSettings["Password"])
+            //    });
 
 
             services.AddControllers()
