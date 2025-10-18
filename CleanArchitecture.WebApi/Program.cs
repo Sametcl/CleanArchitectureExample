@@ -27,7 +27,18 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app.MapGet("/deneme", () => "Welcome to Clean Architecture Web API");
+app.MapGet("/deneme", (IConfiguration configuration) =>
+{
+    string connectionString = configuration.GetConnectionString("SqlConnection");
+
+    // !!!!! TANI ÝÇÝN BUNU EKLEYÝN !!!!!
+    Console.WriteLine("----------------------------------------------------------");
+    Console.WriteLine($"[DIAGNOSTIC_LOG] Okunan ConnectionString: '{connectionString}'");
+    Console.WriteLine("----------------------------------------------------------");
+    // !!!!! TANI SONU !!!!!
+
+    return "Welcome to Clean Architecture Web API";
+});
 
 app.MapGet("/health", async (AppDbContext context) => 
 {
