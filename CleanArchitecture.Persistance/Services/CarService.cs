@@ -25,10 +25,10 @@ namespace CleanArchitecture.Persistance.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task CreateAsync(CreateCarCommand request, CancellationToken cancellationToken)
+        public async Task CreateAsync(CreateCarCommand request,string imageUrl, CancellationToken cancellationToken)
         {
             Car car = mapper.Map<Car>(request);
-
+            car.ImageUrl = imageUrl;
             await carRepository.AddAsync(car, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

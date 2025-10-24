@@ -7,7 +7,7 @@ namespace CleanArchitecture.Application.Services
 {
     public interface ICarService
     {
-        Task CreateAsync(CreateCarCommand request, CancellationToken cancellationToken);
+        Task CreateAsync(CreateCarCommand request, string imageUrl, CancellationToken cancellationToken);
         Task<IPagedList<Car>> GetAllAsync(GetAllCarQuery request ,CancellationToken cancellationToken);  
     }
 }

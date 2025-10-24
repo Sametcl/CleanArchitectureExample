@@ -17,7 +17,7 @@ namespace CleanArchitecture.Presentation.Controllers
 
         [RoleFilter("Create")]
         [HttpPost("[action]")]
-        public async Task<IActionResult> Create(CreateCarCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromForm]CreateCarCommand request, CancellationToken cancellationToken)
         {
             MessageResponse response = await _mediator.Send(request, cancellationToken);
             return Ok(response);

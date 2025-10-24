@@ -42,15 +42,15 @@ app.MapGet("/deneme", (IConfiguration configuration) =>
 
 app.MapGet("/health", async (AppDbContext context) => 
 {
-    var cars = await context.Set<CleanArchitecture.Domain.Entities.Car>() 
-                            .ToListAsync(); 
+    
     return Results.Ok(new
     {
         status = "healthy",
         timestamp = DateTime.UtcNow,
         databaseCheck = "OK",
-        cars = cars 
+       
     });
 });
+
 
 app.Run();
